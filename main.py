@@ -4,32 +4,50 @@ igra = []  # Хранит игровые данные (расположение 
 
 def check_end():
     #  Проверка победы (Дописать )
-    i = 1
-    i += 1
+    winh = []  # проверяем горизонтали
+    winv = []  # проверяем вертикали
+    for i in range(3):
+        winh.clear()
+        winv.clear()
+        for j in range(3):
+            winh.append(igra[i][j])
+            winv.append(igra[j][i])
+        if (winv[0] == winv[1] == winv[2]) and (winv[0] != '-'):
+            return winv[0]
+        elif (winh[0] == winh[1] == winh[2]) and (winh[0] != '-'):
+            return winh[0]
 
 
 def game(fs):
     # Ход игры
     for i in range(1, 11):
+        check = True
         if i < 10:
-            print(f"Ход номер " + str(i))
-            print(f"Игрок за {fs[i%2]}, ваш ход, введите координаты через пробел (слева, сверху)")
-            cords = input().split()
-            cords = list(map(int, cords))
-            if igra[cords[0]][cords[1]] == "-":
-                igra[cords[0]][cords[1]] = fs[i % 2]
-                view_game()
-            else:
-                print("Данная ячейка занята, выберите другую")
-        else:
-            print("Конец Игры - Победила дружба")
+            print(f"*** Ход номер " + str(i) + " ***")
+            while check:
+                try:
+                    print(f"Игрок за {fs[i % 2]}, ваш ход, введите координаты через пробел (слева, сверху)")
+                    cords = input().split()
+                    cords = list(map(int, cords))
+                    if igra[cords[0]][cords[1]] == "-":
+                        igra[cords[0]][cords[1]] = fs[i % 2]
+                        check = False
+                        view_game()
+                    else:
+                        print("\n\nДанная ячейка занята, выберите другую\n\n")
+                except IndexError:
+                    print("\n\nНеверный формат ввода\n\n")
+        end = check_end()
+        if end:
+            print(" ***** Победил игрок за " + str(end) + " ***** ")
+            return new_game()
 
 
 def view_game():
     # Функиця выводит игровое поле
     print(pole[0])
     for i in range(0, 3):
-        vivid = pole[i+1]
+        vivid = pole[i + 1]
         for j in range(0, 3):
             vivid += igra[i][j] + "  "
         print(vivid)
@@ -43,11 +61,11 @@ def new_game():
         igra.append(["-", "-", "-"])
     view_game()
     print("Кто будет ходить первым, X или 0 ?")
-    fs = input()
-    if fs != "X" or fs != "x":
-        fs = ["0", "X"]
-    else:
+    fs = str(input())
+    if fs == '0' or fs == 'o':
         fs = ["X", "0"]
+    else:
+        fs = ["0", "X"]
     game(fs)
 
 
