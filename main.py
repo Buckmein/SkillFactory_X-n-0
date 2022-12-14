@@ -45,12 +45,18 @@ def game(fs=['0', 'X']):
                         view_game()
                     else:
                         print("\n\nДанная ячейка занята, выберите другую\n\n")
-                except IndexError:
+                except:
                     print("\n\nНеверный формат ввода\n\n")
         end = check_end()
         if end:
             print(" ***** Победил игрок за " + str(end) + " ***** ")
             return new_game()
+    end = check_end()
+    if end:
+        print(" ***** Победил игрок за " + str(end) + " ***** ")
+        return new_game()
+    else:
+        print(" ***** Победила дружба !!! ***** ")
 
 
 def view_game():
