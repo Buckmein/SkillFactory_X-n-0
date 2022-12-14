@@ -47,6 +47,7 @@ def game(fs=['0', 'X']):
                         print("\n\nДанная ячейка занята, выберите другую\n\n")
                 except:
                     print("\n\nНеверный формат ввода\n\n")
+                    view_game()
         end = check_end()
         if end:
             print(" ***** Победил игрок за " + str(end) + " ***** ")
@@ -57,6 +58,7 @@ def game(fs=['0', 'X']):
         return new_game()
     else:
         print(" ***** Победила дружба !!! ***** ")
+        return new_game()
 
 
 def view_game():
